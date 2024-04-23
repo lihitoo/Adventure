@@ -5,6 +5,8 @@ using UnityEngine;
 public class IceBoss : MonoBehaviour
 {
     // Start is called before the first frame update
+    public DetectionZone attackZone;
+    Animator animator;
     TouchingDirections TouchingDirections;
     Rigidbody2D rb;
     public float walkSpeed = 5f;
@@ -34,14 +36,32 @@ public class IceBoss : MonoBehaviour
             _walkDirection = value;
         }
     }
+    public bool _hasTarget = false;
+    public bool HasTarget { 
+        get 
+        { 
+            return _hasTarget; 
+        }
+        private set 
+        { 
+            _hasTarget = value;
+            animator.SetBool("hasTarget", value);
+        }
+    }
+
     void Start()
     {
         
+    }
+    private void Update()
+    {
+        HasTarget = attackZone.detectedColliders.Count > 0;
     }
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         TouchingDirections = GetComponent<TouchingDirections>();
+        animator = GetComponent<Animator>();
     }
     // Update is called once per frame
     void FixedUpdate()

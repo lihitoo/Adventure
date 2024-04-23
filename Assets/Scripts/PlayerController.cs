@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 public class PlayerController : MonoBehaviour
 {
     TouchingDirections touchingDirections;
-    // Start is called before the first frame update
     Vector2 moveInput;
     private bool _IsMoving = false;
     public bool isMoving
@@ -20,59 +18,61 @@ public class PlayerController : MonoBehaviour
         {
             _IsMoving = value;
             animator.SetBool("isMoving", value);
-
         }
     }
-
 
     Rigidbody2D rb;
     Animator animator;
     public float walkSpeed = 5f;
     public float jumpImpulse = 10f;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
     }
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         rb.velocity = new Vector2(moveInput.x * tempWalkSpeed, rb.velocity.y);
         animator.SetFloat("yVelocity", rb.velocity.y);
     }
+
     public float tempWalkSpeed
     {
         get
         {
-            if(CanMove)
+            if (CanMove)
             {
                 if (!touchingDirections.IsOnWall && isMoving)
                 {
-                    //Debug.Log("OK");
+                    Debug.Log("TempWalkSpeed: " + walkSpeed);
                     return walkSpeed;
-                    
                 }
-                else return 0f;
+                else
+                {
+                    Debug.Log("TempWalkSpeed: " + 0);
+                    return 0;
+                }
             }
-            else return 0f;
+            else
+            {
+                Debug.Log("TempWalkSpeed: " + 0);
+                return 0;
+            }
         }
     }
-    public bool CanMove { 
-        get 
+
+    [SerializeField]
+    public bool CanMove
+    {
+        get
         {
             return animator.GetBool("canMove");
-        } 
+        }
     }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -86,7 +86,11 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
+
+        Debug.Log("MoveInput: " + moveInput);
+        Debug.Log("IsMoving: " + isMoving);
     }
+
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started && touchingDirections.IsGrounded && CanMove)
@@ -95,6 +99,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
     }
+
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
