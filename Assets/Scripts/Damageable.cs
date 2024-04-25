@@ -20,7 +20,7 @@ public class Damageable : MonoBehaviour
         }
     }
     [SerializeField]
-    private int _health = 100;
+    private int _health = 500;
     public int Health
     {
         get
@@ -35,7 +35,7 @@ public class Damageable : MonoBehaviour
     }
     private bool isInvincible;
     private float timeSinceHit = 0f;
-    private float invincibleTime = 0.25f;
+    private float invincibleTime = 5f;
     [SerializeField]
     private bool _isAlive = true;
     public bool IsAlive
