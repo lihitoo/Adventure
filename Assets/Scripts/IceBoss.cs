@@ -48,7 +48,13 @@ public class IceBoss : MonoBehaviour
             animator.SetBool("hasTarget", value);
         }
     }
-
+    public bool CanMove
+    {
+        get
+        {
+            return animator.GetBool("canMove");
+        }
+    }
     void Start()
     {
         
@@ -71,7 +77,8 @@ public class IceBoss : MonoBehaviour
         {
             FlipDirection();
         }
-        rb.velocity = new Vector2(walkDirectionVector.x * walkSpeed, rb.velocity.y);
+        if(CanMove) rb.velocity = new Vector2(walkDirectionVector.x * walkSpeed, rb.velocity.y);
+        else rb.velocity = new Vector2(0, rb.velocity.y);
         //WalkDirection = (walkDirectionVector == Vector2.right) ? WalkableDirection.Right : WalkableDirection.Left;
     }
     private void FlipDirection()

@@ -47,18 +47,15 @@ public class PlayerController : MonoBehaviour
             {
                 if (!touchingDirections.IsOnWall && isMoving)
                 {
-                    Debug.Log("TempWalkSpeed: " + walkSpeed);
                     return walkSpeed;
                 }
                 else
                 {
-                    Debug.Log("TempWalkSpeed: " + 0);
                     return 0;
                 }
             }
             else
             {
-                Debug.Log("TempWalkSpeed: " + 0);
                 return 0;
             }
         }
@@ -86,9 +83,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
-
-        Debug.Log("MoveInput: " + moveInput);
-        Debug.Log("IsMoving: " + isMoving);
     }
 
     public void OnJump(InputAction.CallbackContext context)
