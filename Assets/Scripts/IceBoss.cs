@@ -37,6 +37,8 @@ public class IceBoss : MonoBehaviour
         }
     }
     public bool _hasTarget = false;
+    public float walkStopRate = 0.2f;
+
     public bool HasTarget { 
         get 
         { 
@@ -78,7 +80,7 @@ public class IceBoss : MonoBehaviour
             FlipDirection();
         }
         if(CanMove) rb.velocity = new Vector2(walkDirectionVector.x * walkSpeed, rb.velocity.y);
-        else rb.velocity = new Vector2(0, rb.velocity.y);
+        else rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x,0,walkStopRate), rb.velocity.y);
         //WalkDirection = (walkDirectionVector == Vector2.right) ? WalkableDirection.Right : WalkableDirection.Left;
     }
     private void FlipDirection()

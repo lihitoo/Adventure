@@ -69,17 +69,23 @@ public class PlayerController : MonoBehaviour
             return animator.GetBool("canMove");
         }
     }
-
+    public bool IsAlive
+    {
+        get
+        {
+            return animator.GetBool("isAlive");
+        }
+    }
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
 
         isMoving = moveInput != Vector2.zero;
-        if (moveInput.x > 0)
+        if (moveInput.x > 0 && IsAlive)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else if (moveInput.x < 0)
+        else if (moveInput.x < 0 && IsAlive)
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
         }
