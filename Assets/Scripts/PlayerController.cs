@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     TouchingDirections touchingDirections;
     Vector2 moveInput;
+    Damageable damageable;
     private bool _IsMoving = false;
     public bool isMoving
     {
@@ -31,14 +32,16 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
+        damageable = GetComponent<Damageable>();
     }
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveInput.x * tempWalkSpeed, rb.velocity.y);
+        if(!damageable.IsHit)
+            rb.velocity = new Vector2(moveInput.x * tempWalkSpeed, rb.velocity.y);
         animator.SetFloat("yVelocity", rb.velocity.y);
     }
-
+   
     public float tempWalkSpeed
     {
         get
@@ -106,5 +109,9 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger("attack");
         }
+    }
+    public void OnHit(int damage, Vector2 knockback)
+    {
+        rb.velocity = new Vector2(knockback.x, knockback.y + rb.velocity.y);
     }
 }

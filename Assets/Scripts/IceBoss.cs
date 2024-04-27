@@ -63,7 +63,7 @@ public class IceBoss : MonoBehaviour
     }
     private void Update()
     {
-        HasTarget = attackZone.detectedColliders.Count > 0;
+        HasTarget =  attackZone.detectedColliders.Count > 0;
     }
     private void Awake()
     {

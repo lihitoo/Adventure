@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Damageable : MonoBehaviour
 {
     // Start is called before the first frame update
+    public UnityEvent<int, Vector2> damageableHit;
     Animator animator;
     [SerializeField]
     private float _maxHealth = 100f;
@@ -30,7 +32,7 @@ public class Damageable : MonoBehaviour
         set
         {
             _health = value;
-            if (_health < 0) IsAlive = false;
+            if (_health <= 0) IsAlive = false;
         }
     }
     private bool isInvincible;
@@ -50,16 +52,35 @@ public class Damageable : MonoBehaviour
             animator.SetBool("isAlive", value);
         }
     }
+
+  
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
-    public void Hit(int damage)
+    public bool IsHit
+    {
+        get
+        {
+            return animator.GetBool("isHit");
+        }
+        set
+        {
+            animator.SetBool("isHit", value);
+        }
+    }
+    public bool Hit(int damage,Vector2 knockback)
     {
         if(IsAlive && !isInvincible)
         {
             Health -= damage;
+            animator.SetTrigger("hit");
+            IsHit = true;
+            damageableHit?.Invoke(damage, knockback);
+            return true;
         }
+        return false;
     }
     // Update is called once per frame
     void Update()
@@ -73,6 +94,6 @@ public class Damageable : MonoBehaviour
             }
             timeSinceHit += Time.deltaTime;
         }
-        Hit(2);
+        //Hit(2);
     }
 }
