@@ -84,15 +84,20 @@ public class PlayerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
 
         isMoving = moveInput != Vector2.zero;
-        if (moveInput.x > 0 && IsAlive)
+        if (moveInput.x < 0 && IsAlive)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            Vector3 newScale = transform.localScale;
+            newScale.x = -1;
+            transform.localScale = newScale;
         }
-        else if (moveInput.x < 0 && IsAlive)
+        else if (moveInput.x > 0 && IsAlive)
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            Vector3 newScale = transform.localScale;
+            newScale.x = 1; 
+            transform.localScale = newScale;
         }
     }
+
 
     public void OnJump(InputAction.CallbackContext context)
     {

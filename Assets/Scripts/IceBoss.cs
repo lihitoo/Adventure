@@ -64,7 +64,7 @@ public class IceBoss : MonoBehaviour
     }
     private void Update()
     {
-        HasTarget =  attackZone.detectedColliders.Count > 0;
+        HasTarget =  attackZone.detectedColliders.FindIndex(item => item.name == "Player") != -1 ;
     }
     private void Awake()
     {
@@ -73,10 +73,9 @@ public class IceBoss : MonoBehaviour
         animator = GetComponent<Animator>();
         damageable = GetComponent<Damageable>();
     }
-    // Update is called once per frame
     void FixedUpdate()
     {
-
+        
         if (TouchingDirections.IsOnWall && TouchingDirections.IsGrounded)
         {
             FlipDirection();
@@ -97,10 +96,6 @@ public class IceBoss : MonoBehaviour
         else if(WalkDirection == WalkableDirection.Left)
         {
             WalkDirection = WalkableDirection.Right;
-        }
-        else
-        {
-            Debug.LogError("DMM");
         }
     }
     public void OnHit(int damage, Vector2 knockback)
