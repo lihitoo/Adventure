@@ -20,7 +20,7 @@ public class TouchingDirections : MonoBehaviour
     private bool _isOnWall = false;
     [SerializeField]
     private bool _isOnCeiling = false;
-    private Vector2 wallCheckDirection => gameObject.transform.rotation == Quaternion.Euler(0, 0, 0) ? Vector2.right : Vector2.left;
+    private Vector2 wallCheckDirection => gameObject.transform.localScale.x > 0 ? Vector2.right : Vector2.left;
 
     public bool IsGrounded {
         get

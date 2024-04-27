@@ -10,6 +10,7 @@ public class IceBoss : MonoBehaviour
     TouchingDirections TouchingDirections;
     Rigidbody2D rb;
     Damageable damageable;
+    public DetectionZone cliffDetectionZone;
     public float walkSpeed = 5f;
     Vector2 walkDirectionVector = Vector2.right;
     public enum WalkableDirection { Right, Left};
@@ -37,7 +38,7 @@ public class IceBoss : MonoBehaviour
             _walkDirection = value;
         }
     }
-    public bool _hasTarget = false;
+    public bool _hasTarget = false; 
     public float walkStopRate = 0.2f;
 
     public bool HasTarget { 
@@ -76,9 +77,9 @@ public class IceBoss : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (TouchingDirections.IsOnWall && TouchingDirections.IsGrounded)
+        if ((TouchingDirections.IsOnWall  || cliffDetectionZone.detectedColliders.Count == 0) && TouchingDirections.IsGrounded)
         {
-            FlipDirection();
+            FlipDirection();          
         }
         if(!damageable.IsHit)
         {
@@ -89,6 +90,7 @@ public class IceBoss : MonoBehaviour
     }
     private void FlipDirection()
     {
+
         if (WalkDirection == WalkableDirection.Right)
         {
             WalkDirection = WalkableDirection.Left;
