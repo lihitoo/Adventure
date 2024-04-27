@@ -6,7 +6,7 @@ public class Attack : MonoBehaviour
 {
     // Start is called before the first frame update
     public int attackDamage = 10;
-    private Vector2 knockback= Vector2.zero;
+    public Vector2 knockback= Vector2.zero;
 
     
 

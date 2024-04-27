@@ -9,6 +9,7 @@ public class IceBoss : MonoBehaviour
     Animator animator;
     TouchingDirections TouchingDirections;
     Rigidbody2D rb;
+    Damageable damageable;
     public float walkSpeed = 5f;
     Vector2 walkDirectionVector = Vector2.right;
     public enum WalkableDirection { Right, Left};
@@ -70,18 +71,22 @@ public class IceBoss : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         TouchingDirections = GetComponent<TouchingDirections>();
         animator = GetComponent<Animator>();
+        damageable = GetComponent<Damageable>();
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-        if(TouchingDirections.IsOnWall && TouchingDirections.IsGrounded)
+
+        if (TouchingDirections.IsOnWall && TouchingDirections.IsGrounded)
         {
             FlipDirection();
         }
-        if(CanMove) rb.velocity = new Vector2(walkDirectionVector.x * walkSpeed, rb.velocity.y);
-        else rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x,0,walkStopRate), rb.velocity.y);
-        //WalkDirection = (walkDirectionVector == Vector2.right) ? WalkableDirection.Right : WalkableDirection.Left;
+        if(!damageable.IsHit)
+        {
+            if (CanMove) rb.velocity = new Vector2(walkDirectionVector.x * walkSpeed, rb.velocity.y);
+            else rb.velocity = new Vector2(Mathf.Lerp(rb.velocity.x, 0, walkStopRate), rb.velocity.y);
+        }
+
     }
     private void FlipDirection()
     {
@@ -98,5 +103,8 @@ public class IceBoss : MonoBehaviour
             Debug.LogError("DMM");
         }
     }
-
+    public void OnHit(int damage, Vector2 knockback)
+    {
+        rb.velocity = new Vector2(knockback.x, knockback.y + rb.velocity.y);
+    }
 }

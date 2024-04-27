@@ -37,7 +37,7 @@ public class Damageable : MonoBehaviour
     }
     private bool isInvincible;
     private float timeSinceHit = 0f;
-    private float invincibleTime = 5f;
+    public float invincibleTime = 5f;
     [SerializeField]
     private bool _isAlive = true;
     public bool IsAlive
@@ -75,7 +75,7 @@ public class Damageable : MonoBehaviour
         if(IsAlive && !isInvincible)
         {
             Health -= damage;
-            animator.SetTrigger("hit");
+            //animator.SetTrigger("hit");
             IsHit = true;
             damageableHit?.Invoke(damage, knockback);
             return true;
