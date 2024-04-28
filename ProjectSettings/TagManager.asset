@@ -16,8 +16,8 @@ TagManager:
   - EnemyHitbox
   - PlayerHitbox
   - Ground
-  - GroundDe
-  - 
+  - GroundDetection
+  - HealthPickup
   - 
   - 
   - 

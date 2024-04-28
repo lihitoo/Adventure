@@ -9,8 +9,8 @@ public class Damageable : MonoBehaviour
     public UnityEvent<int, Vector2> damageableHit;
     Animator animator;
     [SerializeField]
-    private float _maxHealth = 100f;
-    public float MaxHealth
+    private int _maxHealth = 100;
+    public int MaxHealth
     {
         get
         {
@@ -82,6 +82,16 @@ public class Damageable : MonoBehaviour
             return true;
         }
         return false;
+    }
+    public void Heal(int healthRestore)
+    {
+        if(IsAlive)
+        {
+            int maxHeal = Mathf.Max(MaxHealth - Health, 0);
+            int actualHeal = Mathf.Min(maxHeal, healthRestore);
+            Health += actualHeal;
+            CharacterEvents.characterHealed(gameObject, actualHeal);
+        }
     }
     // Update is called once per frame
     void Update()
