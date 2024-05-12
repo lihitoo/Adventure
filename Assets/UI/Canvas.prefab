@@ -85,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5250815354634364777}
   - component: {fileID: 3423992402733450569}
+  - component: {fileID: 6056734987471474708}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -164,6 +165,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6056734987471474708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108829910175851304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9742b58324480904a80bafee24cb38f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2021309043580843500
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,7 +429,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 167.84998, y: -75}
-  m_SizeDelta: {x: 176.9012, y: 79.8911}
+  m_SizeDelta: {x: 204.2673, y: 79.8911}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &267145047423867111
 CanvasRenderer:
@@ -473,13 +486,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -549,7 +562,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -161.41626, y: -15.8164}
+  m_AnchoredPosition: {x: -161.41626, y: -22}
   m_SizeDelta: {x: 322.8325, y: 31.6329}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3509536131619995721
@@ -573,7 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.088050246, g: 0.06396102, b: 0.06396102, a: 0.47058824}
+  m_Color: {r: 0.088050246, g: 0.06396102, b: 0.06396102, a: 0.1882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

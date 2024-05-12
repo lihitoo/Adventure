@@ -333,6 +333,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 58734a74-1c46-46e5-9c20-b338dbed4336
     m_ActionName: Player/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9db3d3c0-5d59-457d-ba19-45abd223154d
+    m_ActionName: UI/Escape[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -467,6 +471,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  healthChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _maxHealth: 100
   _health: 100
   invincibleTime: 0.5
