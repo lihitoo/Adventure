@@ -46,7 +46,7 @@ public class CharacterSwitcher : MonoBehaviour
         }
 
         // Hiển thị nhân vật mới
-        characters[index].SetActive(true);
+        characters[currentCharacterIndex].SetActive(true);
         virtualCamera.transform.position = characterTransforms[currentCharacterIndex].position;
         virtualCamera.Follow = characterTransforms[currentCharacterIndex];
     }
