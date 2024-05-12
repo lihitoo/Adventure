@@ -65,7 +65,7 @@ public class IceBoss : MonoBehaviour
     }
     private void Update()
     {
-        HasTarget =  attackZone.detectedColliders.FindIndex(item => item.name == "Player") != -1 ;
+        HasTarget =  attackZone.detectedColliders.FindIndex(item => item.tag == "Player") != -1 ;
     }
     private void Awake()
     {
