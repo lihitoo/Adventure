@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     TouchingDirections touchingDirections;
     Vector2 moveInput;
     Damageable damageable;
+    bool isAttacking = false;
     private bool _IsMoving = false;
     public bool isMoving
     {
@@ -21,12 +22,10 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isMoving", value);
         }
     }
-
     Rigidbody2D rb;
     Animator animator;
     public float walkSpeed = 5f;
     public float jumpImpulse = 10f;
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -34,14 +33,25 @@ public class PlayerController : MonoBehaviour
         touchingDirections = GetComponent<TouchingDirections>();
         damageable = GetComponent<Damageable>();
     }
-
-    void FixedUpdate()
+    void Update()
     {
-        if(!damageable.IsHit)
+        if (!CanMove) rb.velocity = Vector2.zero;
+        if (!damageable.IsHit && CanMove)
             rb.velocity = new Vector2(moveInput.x * tempWalkSpeed, rb.velocity.y);
         animator.SetFloat("yVelocity", rb.velocity.y);
+        if (Input.GetKey(KeyCode.A) && CanMove)
+        {
+            Vector3 newScale = transform.localScale;
+            newScale.x = -1 * Mathf.Abs(newScale.x);
+            transform.localScale = newScale;
+        }
+        if (Input.GetKey(KeyCode.D) && CanMove)
+        {
+            Vector3 newScale = transform.localScale;
+            newScale.x = Mathf.Abs(newScale.x);
+            transform.localScale = newScale;
+        }
     }
-   
     public float tempWalkSpeed
     {
         get
@@ -81,23 +91,29 @@ public class PlayerController : MonoBehaviour
     }
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
+        //if(context.started)
+        {
+            moveInput = context.ReadValue<Vector2>();
 
-        isMoving = moveInput != Vector2.zero;
-        if (moveInput.x < 0 && IsAlive)
-        {
-            Vector3 newScale = transform.localScale;
-            newScale.x = -1;
-            transform.localScale = newScale;
-        }
-        else if (moveInput.x > 0 && IsAlive)
-        {
-            Vector3 newScale = transform.localScale;
-            newScale.x = 1; 
-            transform.localScale = newScale;
+            isMoving = moveInput != Vector2.zero;
+            if (moveInput.x < 0 && IsAlive && CanMove)
+            {
+                Vector3 newScale = transform.localScale;
+                newScale.x = -1 * Mathf.Abs(newScale.x);
+                transform.localScale = newScale;
+                Debug.Log("left");
+              //  animator.SetBool("canMove", true);
+            }
+            else if (moveInput.x > 0 && IsAlive && CanMove)
+            {
+                Vector3 newScale = transform.localScale;
+                newScale.x = Mathf.Abs(newScale.x);
+                transform.localScale = newScale;
+                Debug.Log("right");
+             //   animator.SetBool("canMove", false);
+            }
         }
     }
-
 
     public void OnJump(InputAction.CallbackContext context)
     {
@@ -107,13 +123,45 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
     }
-
-    public void OnAttack(InputAction.CallbackContext context)
+    public void OnAttack1(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && touchingDirections.IsGrounded && CanMove)
+
         {
-            animator.SetTrigger("attack");
+            animator.SetTrigger("attack1");
+            isAttacking = true;
         }
+        Debug.Log(1);
+    }
+    public void OnAttack2(InputAction.CallbackContext context)
+    {
+        if (context.started && touchingDirections.IsGrounded && CanMove)
+
+        {
+            animator.SetTrigger("attack2");
+            isAttacking = true;
+        }
+        Debug.Log(2);
+    }
+    public void OnAttack3(InputAction.CallbackContext context)
+    {
+        if (context.started && touchingDirections.IsGrounded && CanMove)
+
+        {
+            animator.SetTrigger("attack3");
+            isAttacking = true;
+        }
+        Debug.Log(3);
+    }
+    public void OnAttack4(InputAction.CallbackContext context)
+    {
+        if (context.started && touchingDirections.IsGrounded && CanMove)
+
+        {
+            animator.SetTrigger("attack4");
+            isAttacking = true;
+        }
+        Debug.Log(4);
     }
     public void OnHit(int damage, Vector2 knockback)
     {

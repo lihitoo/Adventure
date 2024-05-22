@@ -6,8 +6,9 @@ using UnityEngine;
 public class CharacterSwitcher : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera;
-    public Transform[] characterTransforms;
+    
     public GameObject[] characters; // Danh sách các nhân vật
+    public Transform[] characterTransforms;
     private int currentCharacterIndex = 0; // Chỉ số của nhân vật hiện tại
     private void Awake()
     {
