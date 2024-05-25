@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
                 Vector3 newScale = transform.localScale;
                 newScale.x = -1 * Mathf.Abs(newScale.x);
                 transform.localScale = newScale;
-                Debug.Log("left");
+            //    Debug.Log("left");
               //  animator.SetBool("canMove", true);
             }
             else if (moveInput.x > 0 && IsAlive && CanMove)
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
                 Vector3 newScale = transform.localScale;
                 newScale.x = Mathf.Abs(newScale.x);
                 transform.localScale = newScale;
-                Debug.Log("right");
+             //   Debug.Log("right");
              //   animator.SetBool("canMove", false);
             }
         }
