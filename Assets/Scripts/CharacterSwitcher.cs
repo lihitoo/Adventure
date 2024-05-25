@@ -27,34 +27,40 @@ public class CharacterSwitcher : MonoBehaviour
 
     void Update()
     {
-        damageable = characters[currentCharacterIndex].GetComponent<Damageable>();
-        // Kiểm tra nếu người dùng bấm nút để chuyển đổi nhân vật (ví dụ: nút Q hoặc Tab)
-        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Tab))
+        if(charactersCount != 0)
         {
-            temp = currentCharacterIndex;
-            // Tăng chỉ số nhân vật hiện tại
-            currentCharacterIndex++;
-
-            // Nếu chỉ số vượt quá số lượng nhân vật, quay lại nhân vật đầu tiên
-            if (currentCharacterIndex >= characters.Length)
+            damageable = characters[currentCharacterIndex].GetComponent<Damageable>();
+            // Kiểm tra nếu người dùng bấm nút để chuyển đổi nhân vật (ví dụ: nút Q hoặc Tab)
+            if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Tab))
             {
-                currentCharacterIndex = 0;
-            }
+                temp = currentCharacterIndex;
+                // Tăng chỉ số nhân vật hiện tại
+                currentCharacterIndex++;
 
-            // Chuyển đổi hiển thị giữa các nhân vật
-            characters[currentCharacterIndex].transform.position = characters[temp].transform.position;
-            SwitchCharacter(currentCharacterIndex);
-        }
-        if (!damageable.IsAlive)
-        {
-            charactersCount--;
-            currentCharacterIndex++;
-            if (currentCharacterIndex >= characters.Length)
-            {
-                currentCharacterIndex = 0;
+                // Nếu chỉ số vượt quá số lượng nhân vật, quay lại nhân vật đầu tiên
+                if (currentCharacterIndex >= characters.Length)
+                {
+                    currentCharacterIndex = 0;
+                }
+
+                // Chuyển đổi hiển thị giữa các nhân vật
+                characters[currentCharacterIndex].transform.position = characters[temp].transform.position;
+                SwitchCharacter(currentCharacterIndex);
             }
-            //SwitchCharacter(currentCharacterIndex);
-            Invoke("tempSwitchCharacter", 2f);
+            if (!damageable.IsAlive)
+            {
+                if(charactersCount > 0)
+                {
+                    charactersCount--;
+                    currentCharacterIndex++;
+                    if (currentCharacterIndex >= characters.Length)
+                    {
+                        currentCharacterIndex = 0;
+                    }
+                    //SwitchCharacter(currentCharacterIndex);
+                    Invoke("tempSwitchCharacter", 2f);
+                }
+            }
         }
     }
     void tempSwitchCharacter()

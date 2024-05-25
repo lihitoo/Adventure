@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject damageTextPrefab;
     public GameObject healthTextPrefab;
     public Canvas canvasText;
+    public GameObject gameOver;
     private void Awake()
     {
         canvasText = FindObjectOfType<Canvas>();
@@ -21,7 +23,8 @@ public class UIManager : MonoBehaviour
     {
         if(CharacterSwitcher.Instance.charactersCount == 0)
         {
-            Invoke("PauseGame", 1f);
+            Invoke("PauseGame", 3f);
+            
         }
     }
     void OnEnable()
@@ -68,5 +71,8 @@ public class UIManager : MonoBehaviour
     private void PauseGame()
     {
         Time.timeScale = 0;
+        //SceneManager.LoadScene(1);
+        gameOver.SetActive(true);
     }
+    
 }

@@ -73,7 +73,8 @@ public class Damageable : MonoBehaviour
     {
         if(IsAlive && !isInvincible)
         {
-            Health -= damage;
+            if (Health - damage < 0) Health = 0;
+            else Health -= damage;
             //animator.SetTrigger("hit");
             IsHit = true;
             damageableHit?.Invoke(damage, knockback);
