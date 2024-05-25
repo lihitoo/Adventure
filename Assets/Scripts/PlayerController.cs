@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     TouchingDirections touchingDirections;
     Vector2 moveInput;
     Damageable damageable;
-    bool isAttacking = false;
     private bool _IsMoving = false;
     public bool isMoving
     {
@@ -129,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
         {
             animator.SetTrigger("attack1");
-            isAttacking = true;
+            //isAttacking = true;
         }
         Debug.Log(1);
     }
@@ -139,7 +138,7 @@ public class PlayerController : MonoBehaviour
 
         {
             animator.SetTrigger("attack2");
-            isAttacking = true;
+            //isAttacking = true;
         }
         Debug.Log(2);
     }
@@ -149,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
         {
             animator.SetTrigger("attack3");
-            isAttacking = true;
+            //isAttacking = true;
         }
         Debug.Log(3);
     }
@@ -159,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
         {
             animator.SetTrigger("attack4");
-            isAttacking = true;
+            //isAttacking = true;
         }
         Debug.Log(4);
     }

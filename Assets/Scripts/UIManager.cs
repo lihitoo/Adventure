@@ -17,6 +17,13 @@ public class UIManager : MonoBehaviour
     {
         canvasText = FindObjectOfType<Canvas>();
     }
+    private void Update()
+    {
+        if(CharacterSwitcher.Instance.charactersCount == 0)
+        {
+            Invoke("PauseGame", 1f);
+        }
+    }
     void OnEnable()
     {
         CharacterEvents.characterDamaged += CharacterTookDamage;
@@ -57,5 +64,9 @@ public class UIManager : MonoBehaviour
         #endif
 
         }
+    }
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
     }
 }

@@ -9,15 +9,20 @@ public class CharacterSwitcher : MonoBehaviour
     [SerializeField] public GameObject[] characters; // Danh sách các nhân vật
     bool[] isDead = { false };
     public Transform[] characterTransforms;
-    private int currentCharacterIndex = 0; // Chỉ số của nhân vật hiện tại
+    private int currentCharacterIndex = 0;
+    private int temp;// Chỉ số của nhân vật hiện tại
     Damageable damageable;
     public delegate void OnCharacterSwitch(GameObject newCharacter);
     public event OnCharacterSwitch CharacterSwitched;
-
+    public int charactersCount ;
+    public static CharacterSwitcher Instance { get; private set; }
+    
     private void Awake()
     {
         SwitchCharacter(currentCharacterIndex);
         damageable = GetComponent<Damageable>();
+        charactersCount = characters.Length;
+        Instance = this;
     }
 
     void Update()
@@ -26,7 +31,7 @@ public class CharacterSwitcher : MonoBehaviour
         // Kiểm tra nếu người dùng bấm nút để chuyển đổi nhân vật (ví dụ: nút Q hoặc Tab)
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Tab))
         {
-            int temp = currentCharacterIndex;
+            temp = currentCharacterIndex;
             // Tăng chỉ số nhân vật hiện tại
             currentCharacterIndex++;
 
@@ -42,7 +47,7 @@ public class CharacterSwitcher : MonoBehaviour
         }
         if (!damageable.IsAlive)
         {
-
+            charactersCount--;
             currentCharacterIndex++;
             if (currentCharacterIndex >= characters.Length)
             {
@@ -68,6 +73,7 @@ public class CharacterSwitcher : MonoBehaviour
 
         // Hiển thị nhân vật mới
         characters[index].SetActive(true);
+        characters[index].transform.position = characters[temp].transform.position;
         virtualCamera.transform.position = characterTransforms[index].position;
         virtualCamera.Follow = characterTransforms[index];
 
