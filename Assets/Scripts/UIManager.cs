@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     // Start is called before the first frame update
+    public static UIManager Instance { get; private set; }
     public GameObject damageTextPrefab;
     public GameObject healthTextPrefab;
     public Canvas canvasText;
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         canvasText = FindObjectOfType<Canvas>();
+        Instance = this;
     }
     private void Update()
     {
@@ -68,7 +70,7 @@ public class UIManager : MonoBehaviour
 
         }
     }
-    private void PauseGame()
+    public void PauseGame()
     {
         Time.timeScale = 0;
         //SceneManager.LoadScene(1);

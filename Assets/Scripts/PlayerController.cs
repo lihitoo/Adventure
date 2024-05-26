@@ -50,6 +50,11 @@ public class PlayerController : MonoBehaviour
             newScale.x = Mathf.Abs(newScale.x);
             transform.localScale = newScale;
         }
+        if(rb.velocity.y < -21)
+        {
+            Destroy(gameObject);
+            UIManager.Instance.PauseGame();
+        }
     }
     public float tempWalkSpeed
     {

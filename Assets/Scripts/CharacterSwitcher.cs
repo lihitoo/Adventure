@@ -16,10 +16,12 @@ public class CharacterSwitcher : MonoBehaviour
     public event OnCharacterSwitch CharacterSwitched;
     public int charactersCount ;
     public static CharacterSwitcher Instance { get; private set; }
-    
+    Transform tempTransform;
     private void Awake()
     {
-        SwitchCharacter(currentCharacterIndex);
+        tempTransform = new GameObject("TempTransform").transform;
+        tempTransform.transform.position = characters[0].transform.position;
+        SwitchCharacter(0);
         damageable = GetComponent<Damageable>();
         charactersCount = characters.Length;
         Instance = this;
@@ -27,35 +29,45 @@ public class CharacterSwitcher : MonoBehaviour
 
     void Update()
     {
-        if(charactersCount != 0)
+        if (charactersCount != 0)
         {
+            
             damageable = characters[currentCharacterIndex].GetComponent<Damageable>();
-            // Kiểm tra nếu người dùng bấm nút để chuyển đổi nhân vật (ví dụ: nút Q hoặc Tab)
             if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Tab))
             {
-                temp = currentCharacterIndex;
-                // Tăng chỉ số nhân vật hiện tại
+                tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
                 currentCharacterIndex++;
-
-                // Nếu chỉ số vượt quá số lượng nhân vật, quay lại nhân vật đầu tiên
                 if (currentCharacterIndex >= characters.Length)
                 {
-                    currentCharacterIndex = 0;
+                    for (int i = 0; i < characters.Length; i++) 
+                    {
+                        damageable = characters[i].GetComponent<Damageable>();
+                        if(damageable.IsAlive)
+                        {
+                            currentCharacterIndex = i;
+                        }
+                    }
                 }
-
-                // Chuyển đổi hiển thị giữa các nhân vật
-                characters[currentCharacterIndex].transform.position = characters[temp].transform.position;
+                characters[currentCharacterIndex].transform.position = tempTransform.transform.position;
                 SwitchCharacter(currentCharacterIndex);
             }
             if (!damageable.IsAlive)
             {
                 if(charactersCount > 0)
                 {
+                    tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
                     charactersCount--;
                     currentCharacterIndex++;
                     if (currentCharacterIndex >= characters.Length)
                     {
-                        currentCharacterIndex = 0;
+                        for (int i = 0; i < characters.Length; i++)
+                        {
+                            damageable = characters[i].GetComponent<Damageable>();
+                            if (damageable.IsAlive)
+                            {
+                                currentCharacterIndex = i;
+                            }
+                        }
                     }
                     //SwitchCharacter(currentCharacterIndex);
                     Invoke("tempSwitchCharacter", 2f);
@@ -68,25 +80,20 @@ public class CharacterSwitcher : MonoBehaviour
         SwitchCharacter(currentCharacterIndex);
 
     }
-    // Hàm để chuyển đổi giữa các nhân vật
     private void SwitchCharacter(int index)
     {
-        // Ẩn tất cả các nhân vật
         foreach (GameObject character in characters)
         {
             character.SetActive(false);
         }
-
-        // Hiển thị nhân vật mới
         characters[index].SetActive(true);
-        characters[index].transform.position = characters[temp].transform.position;
-        virtualCamera.transform.position = characterTransforms[index].position;
+        characters[index].transform.position = tempTransform.transform.position;
+        virtualCamera.transform.position = characters[index].transform.position;
         virtualCamera.Follow = characterTransforms[index];
 
         // Notify listeners about the character switch
         CharacterSwitched?.Invoke(characters[index]);
     }
-
     public GameObject isChosen()
     {
         return characters[currentCharacterIndex];
