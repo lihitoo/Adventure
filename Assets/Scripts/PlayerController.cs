@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInput;
     Damageable damageable;
     private bool _IsMoving = false;
+    private Shootable shootable;
+    [SerializeField] private GameObject bulletPrefabs;
+    [SerializeField] private Transform arrowSpawnPoint;
     public bool isMoving
     {
         get
@@ -144,6 +147,10 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger("attack2");
             //isAttacking = true;
+            if (gameObject.name == "LeafPlayer")
+            {
+                Invoke("ShootArrow",0.5f);
+            }
         }
         Debug.Log(2);
     }
@@ -171,4 +178,15 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(knockback.x, knockback.y + rb.velocity.y);
     }
+
+    void ShootArrow()
+    {
+        
+        Vector2 direction = transform.localScale.x >= 0 ? Vector2.right : Vector2.left;
+        GameObject bullet = Instantiate(bulletPrefabs, arrowSpawnPoint.position, Quaternion.identity); // Instantiate tại vị trí của arrowSpawnPoint
+        bullet.GetComponent<Shootable>().Shoot(direction); // Sử dụng component Shootable để bắn mũi tên
+    }
+        
+    
+    
 }

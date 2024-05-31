@@ -10,13 +10,16 @@ public class CharacterSwitcher : MonoBehaviour
     bool[] isDead = { false };
     public Transform[] characterTransforms;
     private int currentCharacterIndex = 0;
-    private int temp;// Chỉ số của nhân vật hiện tại
+    private int temp; // Chỉ số của nhân vật hiện tại
     Damageable damageable;
+
     public delegate void OnCharacterSwitch(GameObject newCharacter);
+
     public event OnCharacterSwitch CharacterSwitched;
-    public int charactersCount ;
+    public int charactersCount;
     public static CharacterSwitcher Instance { get; private set; }
     Transform tempTransform;
+
     private void Awake()
     {
         tempTransform = new GameObject("TempTransform").transform;
@@ -31,7 +34,6 @@ public class CharacterSwitcher : MonoBehaviour
     {
         if (charactersCount != 0)
         {
-            
             damageable = characters[currentCharacterIndex].GetComponent<Damageable>();
             if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Tab))
             {
@@ -39,21 +41,24 @@ public class CharacterSwitcher : MonoBehaviour
                 currentCharacterIndex++;
                 if (currentCharacterIndex >= characters.Length)
                 {
-                    for (int i = 0; i < characters.Length; i++) 
+                    for (int i = 0; i < characters.Length; i++)
                     {
                         damageable = characters[i].GetComponent<Damageable>();
-                        if(damageable.IsAlive)
+                        if (damageable.IsAlive)
                         {
                             currentCharacterIndex = i;
+                            break;
                         }
                     }
                 }
-                characters[currentCharacterIndex].transform.position = tempTransform.transform.position;
+
+                //characters[currentCharacterIndex].transform.position = tempTransform.transform.position;
                 SwitchCharacter(currentCharacterIndex);
             }
+
             if (!damageable.IsAlive)
             {
-                if(charactersCount > 0)
+                if (charactersCount > 0)
                 {
                     tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
                     charactersCount--;
@@ -69,23 +74,26 @@ public class CharacterSwitcher : MonoBehaviour
                             }
                         }
                     }
+
                     //SwitchCharacter(currentCharacterIndex);
                     Invoke("tempSwitchCharacter", 2f);
                 }
             }
         }
     }
+
     void tempSwitchCharacter()
     {
         SwitchCharacter(currentCharacterIndex);
-
     }
+
     private void SwitchCharacter(int index)
     {
         foreach (GameObject character in characters)
         {
             character.SetActive(false);
         }
+
         characters[index].SetActive(true);
         characters[index].transform.position = tempTransform.transform.position;
         virtualCamera.transform.position = characters[index].transform.position;
@@ -94,6 +102,7 @@ public class CharacterSwitcher : MonoBehaviour
         // Notify listeners about the character switch
         CharacterSwitched?.Invoke(characters[index]);
     }
+
     public GameObject isChosen()
     {
         return characters[currentCharacterIndex];
