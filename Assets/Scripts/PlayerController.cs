@@ -5,42 +5,47 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    TouchingDirections touchingDirections;
-    Vector2 moveInput;
-    Damageable damageable;
-    private bool _IsMoving = false;
-    private Shootable shootable;
-    [SerializeField] private GameObject bulletPrefabs;
-    [SerializeField] private Transform arrowSpawnPoint;
+    protected TouchingDirections touchingDirections;
+    protected Vector2 moveInput;
+    protected Damageable damageable;
+    protected bool _IsMoving = false;
+    [SerializeField] protected GameObject bulletPrefabs;
+    [SerializeField] protected Transform arrowSpawnPoint;
+    protected Rigidbody2D rb;
+    protected Animator animator;
+
+    [SerializeField] protected float walkSpeed = 5f;
+    [SerializeField] protected float jumpImpulse = 10f;
+
     public bool isMoving
     {
         get
         {
             return _IsMoving;
         }
-        private set
+        protected set
         {
             _IsMoving = value;
             animator.SetBool("isMoving", value);
         }
     }
-    Rigidbody2D rb;
-    Animator animator;
-    public float walkSpeed = 5f;
-    public float jumpImpulse = 10f;
-    private void Awake()
+
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
         damageable = GetComponent<Damageable>();
     }
-    void Update()
+
+    protected virtual void Update()
     {
         if (!CanMove) rb.velocity = Vector2.zero;
         if (!damageable.IsHit && CanMove)
             rb.velocity = new Vector2(moveInput.x * tempWalkSpeed, rb.velocity.y);
+
         animator.SetFloat("yVelocity", rb.velocity.y);
+
         if (Input.GetKey(KeyCode.A) && CanMove)
         {
             Vector3 newScale = transform.localScale;
@@ -53,13 +58,14 @@ public class PlayerController : MonoBehaviour
             newScale.x = Mathf.Abs(newScale.x);
             transform.localScale = newScale;
         }
-        if(rb.velocity.y < -21)
+        if (rb.velocity.y < -21)
         {
             Destroy(gameObject);
             UIManager.Instance.PauseGame();
         }
     }
-    public float tempWalkSpeed
+
+    protected float tempWalkSpeed
     {
         get
         {
@@ -89,6 +95,7 @@ public class PlayerController : MonoBehaviour
             return animator.GetBool("canMove");
         }
     }
+
     public bool IsAlive
     {
         get
@@ -96,29 +103,23 @@ public class PlayerController : MonoBehaviour
             return animator.GetBool("isAlive");
         }
     }
+
     public void OnMove(InputAction.CallbackContext context)
     {
-        //if(context.started)
-        {
-            moveInput = context.ReadValue<Vector2>();
+        moveInput = context.ReadValue<Vector2>();
 
-            isMoving = moveInput != Vector2.zero;
-            if (moveInput.x < 0 && IsAlive && CanMove)
-            {
-                Vector3 newScale = transform.localScale;
-                newScale.x = -1 * Mathf.Abs(newScale.x);
-                transform.localScale = newScale;
-            //    Debug.Log("left");
-              //  animator.SetBool("canMove", true);
-            }
-            else if (moveInput.x > 0 && IsAlive && CanMove)
-            {
-                Vector3 newScale = transform.localScale;
-                newScale.x = Mathf.Abs(newScale.x);
-                transform.localScale = newScale;
-             //   Debug.Log("right");
-             //   animator.SetBool("canMove", false);
-            }
+        isMoving = moveInput != Vector2.zero;
+        if (moveInput.x < 0 && IsAlive && CanMove)
+        {
+            Vector3 newScale = transform.localScale;
+            newScale.x = -1 * Mathf.Abs(newScale.x);
+            transform.localScale = newScale;
+        }
+        else if (moveInput.x > 0 && IsAlive && CanMove)
+        {
+            Vector3 newScale = transform.localScale;
+            newScale.x = Mathf.Abs(newScale.x);
+            transform.localScale = newScale;
         }
     }
 
@@ -130,63 +131,41 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
     }
+
     public void OnAttack1(InputAction.CallbackContext context)
     {
         if (context.started && touchingDirections.IsGrounded && CanMove)
-
         {
             animator.SetTrigger("attack1");
-            //isAttacking = true;
         }
-        Debug.Log(1);
     }
-    public void OnAttack2(InputAction.CallbackContext context)
+
+    public virtual void OnAttack2(InputAction.CallbackContext context)
     {
         if (context.started && touchingDirections.IsGrounded && CanMove)
-
         {
             animator.SetTrigger("attack2");
-            //isAttacking = true;
-            if (gameObject.name == "LeafPlayer")
-            {
-                Invoke("ShootArrow",0.5f);
-            }
         }
-        Debug.Log(2);
     }
-    public void OnAttack3(InputAction.CallbackContext context)
+
+    public virtual void OnAttack3(InputAction.CallbackContext context)
     {
         if (context.started && touchingDirections.IsGrounded && CanMove)
-
         {
             animator.SetTrigger("attack3");
-            //isAttacking = true;
         }
-        Debug.Log(3);
     }
+
     public void OnAttack4(InputAction.CallbackContext context)
     {
         if (context.started && touchingDirections.IsGrounded && CanMove)
-
         {
             animator.SetTrigger("attack4");
-            //isAttacking = true;
         }
-        Debug.Log(4);
     }
+
     public void OnHit(int damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, knockback.y + rb.velocity.y);
     }
-
-    void ShootArrow()
-    {
-        
-        Vector2 direction = transform.localScale.x >= 0 ? Vector2.right : Vector2.left;
-        GameObject bullet = Instantiate(bulletPrefabs, arrowSpawnPoint.position, Quaternion.identity); // Instantiate tại vị trí của arrowSpawnPoint
-        bullet.GetComponent<Shootable>().Shoot(direction); // Sử dụng component Shootable để bắn mũi tên
-    }
-        
-    
-    
 }
