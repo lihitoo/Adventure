@@ -1,41 +1,39 @@
 using System;
 using UnityEngine;
-
-public class Shootable : MonoBehaviour 
+[RequireComponent(typeof(Damageable))]
+public class Shootable : Attack
 {
     [SerializeField] private float speed;
     private Animator animator;
     private Rigidbody2D rb;
-    private void Awake()
+    private Vector2 deliveredKnockback;
+    private void Start()
     {
-        
-        
+        deliveredKnockback = transform.localScale.x * knockback.x > 0
+            ? knockback
+            : new Vector2(-knockback.x, knockback.y);
     }
-
     public void Shoot(Vector2 direction)
     {
         rb = GetComponent<Rigidbody2D>();
         //animator.GetComponent<Animator>();
         rb.velocity = direction * speed;
     }
-    
-
-    void OnTriggerEnter2D(Collider2D other)
+    public override void OnTriggerEnter2D(Collider2D other)
     {
-        // Xử lý va chạm nếu cần
-        if(!other.CompareTag("Player"))
+        if (!other.CompareTag("Player"))
         {
-            //Destroy(gameObject);
-            //animator.GetComponent<Animator>();
-            //animator.SetTrigger("hit");
-            //gameObject.SetActive(false);
             rb.velocity = Vector2.zero;
             rb.isKinematic = true;
             Invoke("DestroyObject",0.3f);
         }
-        
-    }
 
+        if(other.CompareTag("Enemies"))
+        {
+            Debug.Log("ban trung"+other.name);
+            base.OnTriggerEnter2D(other);
+        }
+    }
     void DestroyObject()
     {
         Destroy(gameObject);
@@ -72,8 +70,7 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     public float walkSpeed = 5f;
     public float jumpImpulse = 10f;
-    private void Awake()
-    {
+    private void Awake()    {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();

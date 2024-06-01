@@ -39,7 +39,7 @@ public class LeafPlayerController : PlayerController
         Vector2 direction = transform.localScale.x >= 0 ? Vector2.right : Vector2.left;
         GameObject bullet = Instantiate(bulletPrefabs, arrowSpawnPoint.position, Quaternion.identity);
         bullet.transform.localScale = new Vector3(transform.localScale.x, bullet.transform.localScale.y, bullet.transform.localScale.z);
-        bullet.GetComponent<Shootable>().Shoot(direction); // Sử dụng component Shootable để bắn mũi tên
+        bullet.GetComponent<Shootable>()?.Shoot(direction); // Sử dụng component Shootable để bắn mũi tên
     }
 
     private void ShootArrow3()
@@ -51,7 +51,7 @@ public class LeafPlayerController : PlayerController
 
     private IEnumerator DestroyArrow(GameObject arrow)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         Destroy(arrow);
     } 
 }

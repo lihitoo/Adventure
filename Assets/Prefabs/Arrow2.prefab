@@ -11,12 +11,13 @@ GameObject:
   - component: {fileID: 7349247694002000535}
   - component: {fileID: 2852569748697095465}
   - component: {fileID: 2541488731147685340}
-  - component: {fileID: 674692864045534530}
   - component: {fileID: 6998533973253307383}
   - component: {fileID: -982684170457284523}
+  - component: {fileID: 2187705619906863730}
+  - component: {fileID: 3848077474357478309}
   m_Layer: 0
   m_Name: Arrow2
-  m_TagString: Untagged
+  m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,19 +110,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &674692864045534530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2481006346947037193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4eeba877c2e80e54987a8dc94c8b62cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 40
 --- !u!50 &6998533973253307383
 Rigidbody2D:
   serializedVersion: 4
@@ -194,3 +182,52 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9476726, y: 0.12099433}
   m_EdgeRadius: 0
+--- !u!114 &2187705619906863730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2481006346947037193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c473163b8c37444499f49802496431df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageableHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7160525423534891518, guid: ce4435efee7cd3341900e7ed97ff681d, type: 3}
+        m_TargetAssemblyTypeName: IceBoss, Assembly-CSharp
+        m_MethodName: OnHit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  healthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _maxHealth: 100
+  _health: 500
+  invincibleTime: 5
+  _isAlive: 1
+--- !u!114 &3848077474357478309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2481006346947037193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eeba877c2e80e54987a8dc94c8b62cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 10
+  knockback: {x: 0, y: 0}
+  speed: 50

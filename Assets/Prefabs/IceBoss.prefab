@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6049296229493623609}
   m_Layer: 7
   m_Name: IceBoss
-  m_TagString: Untagged
+  m_TagString: Enemies
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,8 +152,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.10028839, y: -0.09452377}
-  m_Size: {x: 2.2685432, y: 5.5160108}
+  m_Offset: {x: -0.16680309, y: -0.09452377}
+  m_Size: {x: 4.032969, y: 5.5160108}
   m_Direction: 0
 --- !u!95 &5381820237552941670
 Animator:
@@ -223,7 +223,7 @@ MonoBehaviour:
   healthChanged:
     m_PersistentCalls:
       m_Calls: []
-  _maxHealth: 500
+  _maxHealth: 100
   _health: 500
   invincibleTime: 1
   _isAlive: 1
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f01f326a1634824da9b8040bdb5a0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 50
+  attackDamage: 10
   knockback: {x: 2, y: 2}
 --- !u!61 &6527894919445651519
 BoxCollider2D:

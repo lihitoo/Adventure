@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IceBoss : MonoBehaviour
+public class Enemies : MonoBehaviour
 {
     // Start is called before the first frame update
     public DetectionZone attackZone;
