@@ -6,11 +6,7 @@ public class LeafPlayerController : PlayerController
 {
     [SerializeField] private GameObject arrowShowerPrefabs;
     [SerializeField] Transform arrowShowerSpawnPoint;
-    protected override void Awake()
-    {
-        base.Awake();
-        // Khởi tạo thêm cho nhân vật sử dụng cung tên nếu cần
-    }
+    [SerializeField] private AudioClip arrowShowerSound;
 
     public override void OnAttack2(InputAction.CallbackContext context)
     {
@@ -41,17 +37,19 @@ public class LeafPlayerController : PlayerController
         bullet.transform.localScale = new Vector3(transform.localScale.x, bullet.transform.localScale.y, bullet.transform.localScale.z);
         bullet.GetComponent<Shootable>()?.Shoot(direction); // Sử dụng component Shootable để bắn mũi tên
     }
-
     private void ShootArrow3()
     {
 
+        
         GameObject arrowShower = Instantiate(arrowShowerPrefabs, arrowShowerSpawnPoint.position, Quaternion.identity);
         StartCoroutine(DestroyArrow(arrowShower));
     }
 
     private IEnumerator DestroyArrow(GameObject arrow)
     {
-        yield return new WaitForSeconds(0.7f);
+        Debug.Log("da xoa");
+        AudioSource.PlayClipAtPoint(arrowShowerSound,arrowShowerSpawnPoint.position);
+        yield return new WaitForSeconds(1.2f);
         Destroy(arrow);
     } 
 }

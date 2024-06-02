@@ -25,7 +25,9 @@ public class UIManager : MonoBehaviour
     {
         if(CharacterSwitcher.Instance.charactersCount == 0)
         {
-            Invoke("PauseGame", 3f);
+            
+            Invoke("PauseGame", 1.5f);
+            
             
         }
     }

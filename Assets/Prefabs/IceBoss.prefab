@@ -209,7 +209,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8870043492501546197}
-        m_TargetAssemblyTypeName: IceBoss, Assembly-CSharp
+        m_TargetAssemblyTypeName: Enemies, Assembly-CSharp
         m_MethodName: OnHit
         m_Mode: 0
         m_Arguments:
@@ -224,7 +224,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _maxHealth: 100
-  _health: 500
+  ememiesCollider: {fileID: 0}
+  _health: 100
   invincibleTime: 1
   _isAlive: 1
 --- !u!114 &6049296229493623609

@@ -4,9 +4,10 @@ using UnityEngine;
 public class Shootable : Attack
 {
     [SerializeField] private float speed;
+    [SerializeField] private AudioClip arrowHitSound;
     private Animator animator;
     private Rigidbody2D rb;
-    private Vector2 deliveredKnockback;
+    //private Vector2 deliveredKnockback;
     private void Start()
     {
         deliveredKnockback = transform.localScale.x * knockback.x > 0
@@ -23,6 +24,7 @@ public class Shootable : Attack
     {
         if (!other.CompareTag("Player"))
         {
+            AudioSource.PlayClipAtPoint(arrowHitSound,transform.position);
             rb.velocity = Vector2.zero;
             rb.isKinematic = true;
             Invoke("DestroyObject",0.3f);
@@ -30,7 +32,7 @@ public class Shootable : Attack
 
         if(other.CompareTag("Enemies"))
         {
-            Debug.Log("ban trung"+other.name);
+            //Debug.Log("ban trung"+other.name);
             base.OnTriggerEnter2D(other);
         }
     }

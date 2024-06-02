@@ -8,7 +8,7 @@ public class PlayOneShotBehaviour : StateMachineBehaviour
     public AudioClip soundToPlay;
     public float volume = 1f;
     public bool playOnEnter = true, playOnExit, playAfterDelay;
-
+    
     public float playDelay = 0.25f;
     float timeSinceEntered = 0f;
     bool hasDelayedSoundPlayed = false;

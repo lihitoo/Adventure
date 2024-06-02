@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    protected virtual void Awake()
+    protected void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();

@@ -11,6 +11,8 @@ public class Damageable : MonoBehaviour
     Animator animator;
     [SerializeField]
     private int _maxHealth = 100;
+
+    public CapsuleCollider2D ememiesCollider;
     public int MaxHealth
     {
         get
@@ -57,6 +59,7 @@ public class Damageable : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        ememiesCollider = GetComponent<CapsuleCollider2D>();
     }
     public bool IsHit
     {
@@ -105,6 +108,17 @@ public class Damageable : MonoBehaviour
             }
             timeSinceHit += Time.deltaTime;
         }
+
+        if (!IsAlive)
+        {
+            ememiesCollider.size = new Vector2(ememiesCollider.size.x, ememiesCollider.size.y * 0.9f);
+            Invoke("DestroyEnemies",2f);
+        }
         //Hit(2);
+    }
+    void DestroyEnemies()
+    {
+
+        gameObject.SetActive(false);
     }
 }

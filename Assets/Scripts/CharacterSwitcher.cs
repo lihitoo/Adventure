@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class CharacterSwitcher : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera;
     [SerializeField] public GameObject[] characters; // Danh sách các nhân vật
-    bool[] isDead = { false };
+    bool[] isDead = new bool[105];
     public Transform[] characterTransforms;
     private int currentCharacterIndex = 0;
     private int temp; // Chỉ số của nhân vật hiện tại
@@ -23,61 +24,78 @@ public class CharacterSwitcher : MonoBehaviour
     private void Awake()
     {
         tempTransform = new GameObject("TempTransform").transform;
-        tempTransform.transform.position = characters[0].transform.position;
-        SwitchCharacter(0);
-        damageable = GetComponent<Damageable>();
+        tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
+        SwitchCharacter(currentCharacterIndex);
+        damageable = characters[currentCharacterIndex].GetComponent<Damageable>();
         charactersCount = characters.Length;
         Instance = this;
     }
 
+    private void Start()
+    {
+        for (int i = 0; i <= 100; i++) isDead[i] = false;
+    }
+
     void Update()
     {
+        Debug.Log(characters[currentCharacterIndex].name+characters[currentCharacterIndex].transform.position);
+        
+        Debug.Log(tempTransform.position);
         if (charactersCount != 0)
         {
             damageable = characters[currentCharacterIndex].GetComponent<Damageable>();
+            
             if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Tab))
             {
-                tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
+                //tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
+                tempTransform.position = characters[currentCharacterIndex].transform.position;
                 currentCharacterIndex++;
-                if (currentCharacterIndex >= characters.Length)
+                if (currentCharacterIndex >= characters.Length || isDead[currentCharacterIndex])
                 {
                     for (int i = 0; i < characters.Length; i++)
                     {
-                        damageable = characters[i].GetComponent<Damageable>();
-                        if (damageable.IsAlive)
+                        if (!isDead[i])
                         {
                             currentCharacterIndex = i;
                             break;
                         }
                     }
                 }
+                characters[currentCharacterIndex].transform.position = tempTransform.position;
 
-                //characters[currentCharacterIndex].transform.position = tempTransform.transform.position;
+                
                 SwitchCharacter(currentCharacterIndex);
             }
 
             if (!damageable.IsAlive)
             {
-                if (charactersCount > 0)
+                //tempTransform.position = characters[currentCharacterIndex].transform.position;
+                Debug.Log(characters[currentCharacterIndex].name+"da chet");
+                isDead[currentCharacterIndex] = true;
+                //tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
+                charactersCount--;
+                tempTransform.position = characters[currentCharacterIndex].transform.position;
+                //currentCharacterIndex++;
+                //damageable = characters[currentCharacterIndex].GetComponent<Damageable>();
+                //if (!damageable.IsAlive)
                 {
-                    tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
-                    charactersCount--;
-                    currentCharacterIndex++;
-                    if (currentCharacterIndex >= characters.Length)
+                    //if (currentCharacterIndex >= characters.Length)
                     {
                         for (int i = 0; i < characters.Length; i++)
                         {
-                            damageable = characters[i].GetComponent<Damageable>();
-                            if (damageable.IsAlive)
+                            if (!isDead[i])
                             {
+                                Debug.Log(characters[i].name+"dc chon");
                                 currentCharacterIndex = i;
+                                break;
                             }
                         }
                     }
-
-                    //SwitchCharacter(currentCharacterIndex);
-                    Invoke("tempSwitchCharacter", 2f);
                 }
+                Debug.Log(tempTransform.position+"dc chon la pos tiep theo");
+                //SwitchCharacter(currentCharacterIndex);
+                characters[currentCharacterIndex].transform.position = tempTransform.position;
+                Invoke("tempSwitchCharacter", 1f);
             }
         }
     }
@@ -95,7 +113,8 @@ public class CharacterSwitcher : MonoBehaviour
         }
 
         characters[index].SetActive(true);
-        characters[index].transform.position = tempTransform.transform.position;
+        
+        
         virtualCamera.transform.position = characters[index].transform.position;
         virtualCamera.Follow = characterTransforms[index];
 
