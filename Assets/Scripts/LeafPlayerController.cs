@@ -33,9 +33,14 @@ public class LeafPlayerController : PlayerController
     private void ShootArrow2()
     {
         Vector2 direction = transform.localScale.x >= 0 ? Vector2.right : Vector2.left;
-        GameObject bullet = Instantiate(bulletPrefabs, arrowSpawnPoint.position, Quaternion.identity);
-        bullet.transform.localScale = new Vector3(transform.localScale.x, bullet.transform.localScale.y, bullet.transform.localScale.z);
-        bullet.GetComponent<Shootable>()?.Shoot(direction); // Sử dụng component Shootable để bắn mũi tên
+        GameObject arrow = ObjectPool.Instance.GetPooledObject();
+        arrow.SetActive(true);
+        if (arrow != null)
+        {
+            arrow.transform.position = arrowSpawnPoint.position;
+        }
+        arrow.transform.localScale = new Vector3(transform.localScale.x, arrow.transform.localScale.y, arrow.transform.localScale.z);
+        arrow.GetComponent<Shootable>()?.Shoot(direction); // Sử dụng component Shootable để bắn mũi tên
     }
     private void ShootArrow3()
     {

@@ -38,7 +38,8 @@ public class Shootable : Attack
     }
     void DestroyObject()
     {
-        Destroy(gameObject);
+        
+        gameObject.SetActive(false);
     }
 }
 /*

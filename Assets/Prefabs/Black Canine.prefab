@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7160525423534891518}
   - component: {fileID: 3960081596830917481}
   - component: {fileID: 410411547904933625}
-  - component: {fileID: 4806757527553366997}
+  - component: {fileID: 4242605588776377637}
   m_Layer: 7
   m_Name: Black Canine
   m_TagString: Enemies
@@ -225,7 +225,7 @@ MonoBehaviour:
   _isGrounded: 0
   _isOnWall: 0
   _isOnCeiling: 0
---- !u!70 &4806757527553366997
+--- !u!70 &4242605588776377637
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,8 +257,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.178348, y: -0.104038715}
-  m_Size: {x: 1.9893593, y: 1.9893593}
+  m_Offset: {x: -0.22206943, y: -0.061424416}
+  m_Size: {x: 1.8187803, y: 1.8187803}
   m_Direction: 0
 --- !u!1 &3523754264276243438
 GameObject:
@@ -339,7 +339,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.83022267, y: 0}
+  m_Offset: {x: -1.0301635, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -350,7 +350,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9467479, y: 1}
+  m_Size: {x: 0.7929471, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &9130835823007074764
 GameObject:
@@ -379,7 +379,7 @@ Transform:
   m_GameObject: {fileID: 9130835823007074764}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: -1.96, z: 0}
+  m_LocalPosition: {x: 0.09, y: -2.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -430,7 +430,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.0317085, y: 0.375412}
+  m_Offset: {x: -0.8779082, y: 0.5868875}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -441,7 +441,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.51384056, y: 1.0129313}
+  m_Size: {x: 0.20623958, y: 0.5899804}
   m_EdgeRadius: 0
 --- !u!1001 &7054888610818779598
 PrefabInstance:
@@ -493,7 +493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3938083426860505416, guid: df1b3c035e578eb409c21a692bd85b46, type: 3}
       propertyPath: m_Size.x
-      value: 0.5394535
+      value: 0.7069578
       objectReference: {fileID: 0}
     - target: {fileID: 3938083426860505416, guid: df1b3c035e578eb409c21a692bd85b46, type: 3}
       propertyPath: m_Size.y
@@ -505,7 +505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3938083426860505416, guid: df1b3c035e578eb409c21a692bd85b46, type: 3}
       propertyPath: m_Offset.x
-      value: 6.352723
+      value: 6.268971
       objectReference: {fileID: 0}
     - target: {fileID: 3938083426860505416, guid: df1b3c035e578eb409c21a692bd85b46, type: 3}
       propertyPath: m_Offset.y

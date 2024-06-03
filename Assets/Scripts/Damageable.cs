@@ -111,7 +111,7 @@ public class Damageable : MonoBehaviour
 
         if (!IsAlive)
         {
-            ememiesCollider.size = new Vector2(ememiesCollider.size.x, ememiesCollider.size.y * 0.9f);
+            //ememiesCollider.size = new Vector2(ememiesCollider.size.x, ememiesCollider.size.y * 0.9f);
             Invoke("DestroyEnemies",2f);
         }
         //Hit(2);
