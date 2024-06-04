@@ -38,9 +38,6 @@ public class CharacterSwitcher : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(characters[currentCharacterIndex].name+characters[currentCharacterIndex].transform.position);
-        
-        Debug.Log(tempTransform.position);
         if (charactersCount != 0)
         {
             damageable = characters[currentCharacterIndex].GetComponent<Damageable>();

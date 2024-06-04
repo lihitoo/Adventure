@@ -1436,8 +1436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb92cad4ca0e35642b933274c84e34b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefabs: {fileID: 0}
-  arrowSpawnPoint: {fileID: 0}
   walkSpeed: 8
   jumpImpulse: 8
 --- !u!1 &398762911
@@ -3150,8 +3148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb92cad4ca0e35642b933274c84e34b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefabs: {fileID: 0}
-  arrowSpawnPoint: {fileID: 0}
   walkSpeed: 8
   jumpImpulse: 8
 --- !u!1 &905173165
@@ -23535,13 +23531,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49e99f06ef7f7845a492b74624480c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefabs: {fileID: 2481006346947037193, guid: b8201eb1ee2599b489c6b4c604ee4e43, type: 3}
-  arrowSpawnPoint: {fileID: 184310821}
   walkSpeed: 8
   jumpImpulse: 8
   arrowShowerPrefabs: {fileID: 7589806302296181214, guid: fc204045e65ef6d4d8bc0eeb975261b3, type: 3}
   arrowShowerSpawnPoint: {fileID: 1719772711}
   arrowShowerSound: {fileID: 8300000, guid: 07f276398a7162840b0cd5e0452248ec, type: 3}
+  bulletPrefabs: {fileID: 2481006346947037193, guid: b8201eb1ee2599b489c6b4c604ee4e43, type: 3}
+  arrowSpawnPoint: {fileID: 184310821}
 --- !u!1001 &1981595205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24405,8 +24401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb92cad4ca0e35642b933274c84e34b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefabs: {fileID: 0}
-  arrowSpawnPoint: {fileID: 0}
   walkSpeed: 8
   jumpImpulse: 8
 --- !u!1 &2052337439

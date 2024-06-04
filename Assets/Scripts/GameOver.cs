@@ -7,7 +7,7 @@ public class GameOver : MonoBehaviour
 {
     public void Restart()
     {
-        SceneManager.LoadScene("GameplayScene");
+        SceneManager.LoadScene("Level 1");
         Time.timeScale = 1;
     }
 }

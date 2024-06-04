@@ -8,9 +8,11 @@ public class PlayerController : MonoBehaviour
     protected TouchingDirections touchingDirections;
     protected Vector2 moveInput;
     protected Damageable damageable;
+
     protected bool _IsMoving = false;
-    [SerializeField] protected GameObject bulletPrefabs;
-    [SerializeField] protected Transform arrowSpawnPoint;
+
+    //[SerializeField] protected GameObject bulletPrefabs;
+    //[SerializeField] protected Transform arrowSpawnPoint;
     protected Rigidbody2D rb;
     protected Animator animator;
 
@@ -19,10 +21,7 @@ public class PlayerController : MonoBehaviour
 
     public bool isMoving
     {
-        get
-        {
-            return _IsMoving;
-        }
+        get { return _IsMoving; }
         protected set
         {
             _IsMoving = value;
@@ -45,19 +44,20 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(moveInput.x * tempWalkSpeed, rb.velocity.y);
 
         animator.SetFloat("yVelocity", rb.velocity.y);
+        if (CanMove && !IsAttacking && IsAlive)
+        {
+            if (Input.GetKey(KeyCode.A))
+            {
+                flipToLeft();
+            }
 
-        if (Input.GetKey(KeyCode.A) && CanMove)
-        {
-            Vector3 newScale = transform.localScale;
-            newScale.x = -1 * Mathf.Abs(newScale.x);
-            transform.localScale = newScale;
+            if (Input.GetKey(KeyCode.D))
+            {
+                flipToRight();
+            }
         }
-        if (Input.GetKey(KeyCode.D) && CanMove)
-        {
-            Vector3 newScale = transform.localScale;
-            newScale.x = Mathf.Abs(newScale.x);
-            transform.localScale = newScale;
-        }
+
+
         if (rb.velocity.y < -21)
         {
             Destroy(gameObject);
@@ -90,18 +90,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     public bool CanMove
     {
-        get
-        {
-            return animator.GetBool("canMove");
-        }
+        get { return animator.GetBool("canMove"); }
+    }
+
+    public bool IsAttacking
+    {
+        get { return animator.GetBool("isAttacking"); }
     }
 
     public bool IsAlive
     {
-        get
-        {
-            return animator.GetBool("isAlive");
-        }
+        get { return animator.GetBool("isAlive"); }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -109,18 +108,28 @@ public class PlayerController : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
 
         isMoving = moveInput != Vector2.zero;
-        if (moveInput.x < 0 && IsAlive && CanMove)
+        if (moveInput.x < 0 && IsAlive && CanMove && !IsAttacking)
         {
-            Vector3 newScale = transform.localScale;
-            newScale.x = -1 * Mathf.Abs(newScale.x);
-            transform.localScale = newScale;
+            flipToLeft();
         }
-        else if (moveInput.x > 0 && IsAlive && CanMove)
+        else if (moveInput.x > 0 && IsAlive && CanMove && !IsAttacking)
         {
-            Vector3 newScale = transform.localScale;
-            newScale.x = Mathf.Abs(newScale.x);
-            transform.localScale = newScale;
+            flipToRight();
         }
+    }
+
+    protected void flipToLeft()
+    {
+        Vector3 newScale = transform.localScale;
+        newScale.x = -1 * Mathf.Abs(newScale.x);
+        transform.localScale = newScale;
+    }
+
+    protected void flipToRight()
+    {
+        Vector3 newScale = transform.localScale;
+        newScale.x = Mathf.Abs(newScale.x);
+        transform.localScale = newScale;
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -132,9 +141,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnAttack1(InputAction.CallbackContext context)
+    public virtual void OnAttack1(InputAction.CallbackContext context)
     {
-        if (context.started && touchingDirections.IsGrounded && CanMove)
+        if (context.started && CanMove)
         {
             animator.SetTrigger("attack1");
         }

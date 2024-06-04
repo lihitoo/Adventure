@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 [RequireComponent(typeof(Damageable))]
-public class Shootable : Attack
+public class Arrow : Attack
 {
     [SerializeField] private float speed;
     [SerializeField] private AudioClip arrowHitSound;
@@ -17,6 +17,7 @@ public class Shootable : Attack
     public void Shoot(Vector2 direction)
     {
         rb = GetComponent<Rigidbody2D>();
+        
         //animator.GetComponent<Animator>();
         rb.velocity = direction * speed;
     }
