@@ -41,7 +41,7 @@ public class CharacterSwitcher : MonoBehaviour
         if (charactersCount != 0)
         {
             damageable = characters[currentCharacterIndex].GetComponent<Damageable>();
-            
+
             if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Tab))
             {
                 //tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
@@ -58,41 +58,37 @@ public class CharacterSwitcher : MonoBehaviour
                         }
                     }
                 }
+
                 characters[currentCharacterIndex].transform.position = tempTransform.position;
 
-                
+
                 SwitchCharacter(currentCharacterIndex);
             }
 
             if (!damageable.IsAlive)
             {
                 //tempTransform.position = characters[currentCharacterIndex].transform.position;
-                Debug.Log(characters[currentCharacterIndex].name+"da chet");
+                Debug.Log(characters[currentCharacterIndex].name + "da chet");
                 isDead[currentCharacterIndex] = true;
                 //tempTransform.transform.position = characters[currentCharacterIndex].transform.position;
                 charactersCount--;
                 tempTransform.position = characters[currentCharacterIndex].transform.position;
-                //currentCharacterIndex++;
-                //damageable = characters[currentCharacterIndex].GetComponent<Damageable>();
-                //if (!damageable.IsAlive)
+
+                for (int i = 0; i < characters.Length; i++)
                 {
-                    //if (currentCharacterIndex >= characters.Length)
+                    if (!isDead[i])
                     {
-                        for (int i = 0; i < characters.Length; i++)
-                        {
-                            if (!isDead[i])
-                            {
-                                Debug.Log(characters[i].name+"dc chon");
-                                currentCharacterIndex = i;
-                                break;
-                            }
-                        }
+                        Debug.Log(characters[i].name + "dc chon");
+                        currentCharacterIndex = i;
+                        break;
                     }
                 }
-                Debug.Log(tempTransform.position+"dc chon la pos tiep theo");
+
+
+                Debug.Log(tempTransform.position + "dc chon la pos tiep theo");
                 //SwitchCharacter(currentCharacterIndex);
                 characters[currentCharacterIndex].transform.position = tempTransform.position;
-                Invoke("tempSwitchCharacter", 1f);
+                Invoke("tempSwitchCharacter", 2f);
             }
         }
     }
@@ -110,8 +106,8 @@ public class CharacterSwitcher : MonoBehaviour
         }
 
         characters[index].SetActive(true);
-        
-        
+
+
         virtualCamera.transform.position = characters[index].transform.position;
         virtualCamera.Follow = characterTransforms[index];
 

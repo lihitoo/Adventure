@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class AirEnemies : MonoBehaviour
@@ -16,7 +17,8 @@ public class AirEnemies : MonoBehaviour
     public float walkStopRate = 0.2f;
     [SerializeField] private Transform[] wayPoints;
     private int wayPointsNum = 0;
-    private float distancePointToReach = 0.2f;
+    private float distancePointToReach = 0.5f;
+    private Transform nextWayPoints;
 
     public bool HasTarget
     {
@@ -49,6 +51,7 @@ public class AirEnemies : MonoBehaviour
         TouchingDirections = GetComponent<TouchingDirections>();
         animator = GetComponent<Animator>();
         damageable = GetComponent<Damageable>();
+        nextWayPoints = wayPoints[0];
     }
 
     void FixedUpdate()
@@ -57,10 +60,16 @@ public class AirEnemies : MonoBehaviour
 
     private void Fly()
     {
-        Vector2 directionToFly = (wayPoints[wayPointsNum].position - transform.position).normalized;
+        Vector2 directionToFly = (nextWayPoints.position - transform.position).normalized;
+        if (directionToFly.x >= 0) transform.eulerAngles = new Vector3(0, 180, 0);
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+
+        if (_hasTarget) directionToFly = Vector2.zero;
         rb.velocity = directionToFly * speed;
-        float distance = Vector2.Distance(directionToFly, transform.position);
-        Debug.Log(distance);
+        float distance = Vector2.Distance(nextWayPoints.position, transform.position);
         if (distancePointToReach >= distance)
         {
             wayPointsNum++;
@@ -68,6 +77,8 @@ public class AirEnemies : MonoBehaviour
             {
                 wayPointsNum = 0;
             }
+
+            nextWayPoints = wayPoints[wayPointsNum];
         }
     }
 
