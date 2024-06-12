@@ -223,9 +223,9 @@ MonoBehaviour:
   healthChanged:
     m_PersistentCalls:
       m_Calls: []
-  _maxHealth: 100
+  _maxHealth: 200
   ememiesCollider: {fileID: 0}
-  _health: 100
+  _health: 200
   invincibleTime: 1
   _isAlive: 1
 --- !u!114 &6049296229493623609
