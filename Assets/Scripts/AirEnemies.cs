@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -5,10 +6,8 @@ using UnityEngine;
 
 public class AirEnemies : MonoBehaviour
 {
-    // Start is called before the first frame update
     public DetectionZone attackZone;
     Animator animator;
-    TouchingDirections TouchingDirections;
     Rigidbody2D rb;
     Damageable damageable;
     public float speed = 5f;
@@ -35,10 +34,6 @@ public class AirEnemies : MonoBehaviour
         get { return animator.GetBool("canMove"); }
     }
 
-    void Start()
-    {
-    }
-
     private void Update()
     {
         HasTarget = attackZone.detectedColliders.FindIndex(item => item.tag == "Player") != -1;
@@ -48,10 +43,13 @@ public class AirEnemies : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        TouchingDirections = GetComponent<TouchingDirections>();
         animator = GetComponent<Animator>();
         damageable = GetComponent<Damageable>();
         nextWayPoints = wayPoints[0];
+    }
+
+    private void Start()
+    {
     }
 
     void FixedUpdate()
