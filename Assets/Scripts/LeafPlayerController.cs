@@ -2,7 +2,6 @@ using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 public class LeafPlayerController : PlayerController
 {
     [SerializeField] private GameObject arrowShowerPrefabs;
@@ -22,7 +21,6 @@ public class LeafPlayerController : PlayerController
 
     public override void OnAttack2(InputAction.CallbackContext context)
     {
-        //base.OnAttack2(context);
         if (context.started && CanMove && !IsAttacking)
         {
             {
@@ -38,7 +36,7 @@ public class LeafPlayerController : PlayerController
         if (context.started && touchingDirections.IsGrounded && CanMove)
         {
             {
-                Invoke("ShootArrow3", 1f);
+                Invoke("ShootArrowShower", 1f);
             }
         }
     }
@@ -48,7 +46,6 @@ public class LeafPlayerController : PlayerController
         Vector2 direction = transform.localScale.x >= 0 ? Vector2.right : Vector2.left;
         if (!touchingDirections.IsGrounded) direction = new Vector2(direction.x, -1f);
         GameObject arrow = ObjectPool.Instance.GetPooledObject();
-        //arrow.SetActive(true);
         if (arrow != null)
         {
             arrow.transform.position = (touchingDirections.IsGrounded)
@@ -76,16 +73,17 @@ public class LeafPlayerController : PlayerController
         arrow.GetComponent<Arrow>()?.Shoot(direction);
     }
 
-    private void ShootArrow3()
+    private void ShootArrowShower()
     {
         GameObject arrowShower = Instantiate(arrowShowerPrefabs, arrowShowerSpawnPoint.position, Quaternion.identity);
+        
         StartCoroutine(DestroyArrow(arrowShower));
     }
 
     private IEnumerator DestroyArrow(GameObject arrow)
     {
-        Debug.Log("da xoa");
         AudioSource.PlayClipAtPoint(arrowShowerSound, arrowShowerSpawnPoint.position);
+        Debug.Log("da xoa");
         yield return new WaitForSeconds(1.2f);
         Destroy(arrow);
     }
